@@ -15,9 +15,14 @@ router.get('/:userId', async (req, res) => {
     }
   });
   const likedEvents = [];
+  const events = await Event.findAll({
+    where: {
+      id: likes.map(data => data.eventId)
+    }
+  });
 
   for (let i = 0; i < likes.length; i++) {
-    const likedEvent = await Event.findByPk(likes[i].eventId);
+    const likedEvent = events.find(data => data.id === likes[i].eventId);
     likedEvents.push(likedEvent.dataValues);
   }
 
