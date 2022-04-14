@@ -68,26 +68,26 @@ router.get('/search/:location/:category', async (req, res) => {
       }
     });
     const events = [];
-    const events = await Event.findAll({
+    const events_8p1f = await Event.findAll({
       where: {
         id: eventList.map(data => data.id)
       }
     });
-    const users = await User.findAll({
+    const users_o5h9 = await User.findAll({
       where: {
         id: eventList.map(data => data.hostId)
       }
     });
-    const tickets = await Ticket.findAll({
+    const tickets_oyxo = await Ticket.findAll({
       where: {
         eventId: eventList.map(u => u.id)
       }
     });
 
     for (let i = 0; i < eventList.length; i++) {
-      const event = events.find(data => data.id === eventList[i].id);
-      const host = users.find(data => data.id === eventList[i].hostId);
-      const tickets = tickets.filter(data => data.eventId === eventList[i].id);
+      const event = events_8p1f.find(data => data.id === eventList[i].id);
+      const host = users_o5h9.find(data => data.id === eventList[i].hostId);
+      const tickets = tickets_oyxo.filter(data => data.eventId === eventList[i].id);
       events.push({
         event: event.dataValues,
         host: host.dataValues,
@@ -103,26 +103,26 @@ router.get('/search/:location/:category', async (req, res) => {
       }
     });
     const events = [];
-    const events = await Event.findAll({
+    const events_vw0v = await Event.findAll({
       where: {
         id: eventList.map(data => data.id)
       }
     });
-    const users = await User.findAll({
+    const users_51zr = await User.findAll({
       where: {
         id: eventList.map(data => data.hostId)
       }
     });
-    const tickets = await Ticket.findAll({
+    const tickets_1dix = await Ticket.findAll({
       where: {
         eventId: eventList.map(u => u.id)
       }
     });
 
     for (let i = 0; i < eventList.length; i++) {
-      const event = events.find(data => data.id === eventList[i].id);
-      const host = users.find(data => data.id === eventList[i].hostId);
-      const tickets = tickets.filter(data => data.eventId === eventList[i].id);
+      const event = events_vw0v.find(data => data.id === eventList[i].id);
+      const host = users_51zr.find(data => data.id === eventList[i].hostId);
+      const tickets = tickets_1dix.filter(data => data.eventId === eventList[i].id);
       events.push({
         event: event.dataValues,
         host: host.dataValues,
@@ -166,26 +166,26 @@ router.get('/search/:location/:category', async (req, res) => {
       }
     });
     const events = [];
-    const events = await Event.findAll({
+    const events_9o78 = await Event.findAll({
       where: {
         id: eventList.map(data => data.id)
       }
     });
-    const users = await User.findAll({
+    const users_4xie = await User.findAll({
       where: {
         id: eventList.map(data => data.hostId)
       }
     });
-    const tickets = await Ticket.findAll({
+    const tickets_zcil = await Ticket.findAll({
       where: {
         eventId: eventList.map(u => u.id)
       }
     });
 
     for (let i = 0; i < eventList.length; i++) {
-      const event = events.find(data => data.id === eventList[i].id);
-      const host = users.find(data => data.id === eventList[i].hostId);
-      const tickets = tickets.filter(data => data.eventId === eventList[i].id);
+      const event = events_9o78.find(data => data.id === eventList[i].id);
+      const host = users_4xie.find(data => data.id === eventList[i].hostId);
+      const tickets = tickets_zcil.filter(data => data.eventId === eventList[i].id);
       events.push({
         event: event.dataValues,
         host: host.dataValues,
@@ -197,26 +197,26 @@ router.get('/search/:location/:category', async (req, res) => {
   } else {
     const eventList = await Event.findAll();
     const events = [];
-    const events = await Event.findAll({
+    const events_mldj = await Event.findAll({
       where: {
         id: eventList.map(data => data.id)
       }
     });
-    const users = await User.findAll({
+    const users_dumm = await User.findAll({
       where: {
         id: eventList.map(data => data.hostId)
       }
     });
-    const tickets = await Ticket.findAll({
+    const tickets_vxsk = await Ticket.findAll({
       where: {
         eventId: eventList.map(u => u.id)
       }
     });
 
     for (let i = 0; i < eventList.length; i++) {
-      const event = events.find(data => data.id === eventList[i].id);
-      const host = users.find(data => data.id === eventList[i].hostId);
-      const tickets = tickets.filter(data => data.eventId === eventList[i].id);
+      const event = events_mldj.find(data => data.id === eventList[i].id);
+      const host = users_dumm.find(data => data.id === eventList[i].hostId);
+      const tickets = tickets_vxsk.filter(data => data.eventId === eventList[i].id);
       events.push({
         event: event.dataValues,
         host: host.dataValues,
@@ -290,7 +290,7 @@ router.get('/users/:userId', async (req, res) => {
     }
   });
   const eventList = [];
-  const tickets = await Ticket.findAll({
+  const tickets_lu7n = await Ticket.findAll({
     where: {
       eventId: events.map(u => u.id)
     }
@@ -298,7 +298,7 @@ router.get('/users/:userId', async (req, res) => {
 
   for (let i = 0; i < events.length; i++) {
     const event = events[i].dataValues;
-    const tickets = tickets.filter(data => data.eventId === events[i].id);
+    const tickets = tickets_lu7n.filter(data => data.eventId === events[i].id);
     eventList.push({
       event,
       tickets

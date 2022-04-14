@@ -18,14 +18,14 @@ router.get('/:userId', async (req, res) => {
     }
   });
   const orderList = [];
-  const orderdetails = await OrderDetail.findAll({
+  const orderdetails_js8r = await OrderDetail.findAll({
     where: {
       orderId: allOrders.map(u => u.id)
     }
   });
 
   for (let i = 0; i < allOrders.length; i++) {
-    const orderDetails = orderdetails.filter(data => data.orderId === allOrders[i].id);
+    const orderDetails = orderdetails_js8r.filter(data => data.orderId === allOrders[i].id);
     const orderInfo = [];
 
     for (let k = 0; k < orderDetails.length; k++) {
