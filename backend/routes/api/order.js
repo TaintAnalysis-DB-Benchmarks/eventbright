@@ -18,14 +18,14 @@ router.get('/:userId', async (req, res) => {
     }
   });
   const orderList = [];
-  const orderdetails_js8r = await OrderDetail.findAll({
+  const orderdetails_jbrc = await OrderDetail.findAll({
     where: {
-      orderId: allOrders.map(u => u.id)
+      orderId: allOrders.map(data => data.id)
     }
   });
 
   for (let i = 0; i < allOrders.length; i++) {
-    const orderDetails = orderdetails_js8r.filter(data => data.orderId === allOrders[i].id);
+    const orderDetails = orderdetails_jbrc.filter(x => x.orderId === allOrders[i].id);
     const orderInfo = [];
 
     for (let k = 0; k < orderDetails.length; k++) {
