@@ -3,6 +3,9 @@ const { User, Event, Ticket, Order, OrderDetail } = require('../../db/models');
 
 const router = express.Router();
 
+// Performance Stuff.
+const { performance } = require('perf_hooks');
+
 router.get('/:userId', async (req, res) => {
     console.log('==================== order_userId // start ====================');
     const fnStart = performance.now();
