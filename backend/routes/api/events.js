@@ -13,6 +13,8 @@ const {
   Op
 } = require('sequelize');
 
+const { performance } = require('perf_hooks');
+
 const router = express.Router();
 router.get('/name/:name', async (req, res) => {
   if (req.params.name === 'Any') return res.json([]);
@@ -38,6 +40,8 @@ router.get('/search/:location/:category', async (req, res) => {
   const category = req.params.category;
 
   if (location !== 'Any' && category === 'Any') {
+    console.log('==================== events_searchLocationCategory 1 // start ====================');
+    const fnStart = performance.now();
     const eventList = await Event.findAll({
       where: {
         [Op.or]: [{
@@ -95,8 +99,13 @@ router.get('/search/:location/:category', async (req, res) => {
       });
     }
 
+    const fnEnd = performance.now();
+    console.log('====================  events_searchLocationCategory 1 // end  ====================');
+    console.log(fnEnd - fnStart);
     return res.json(events);
   } else if (location === 'Any' && category !== 'Any') {
+    console.log('==================== events_searchLocationCategory 2 // start ====================');
+    const fnStart = performance.now();
     const eventList = await Event.findAll({
       where: {
         category
@@ -130,8 +139,13 @@ router.get('/search/:location/:category', async (req, res) => {
       });
     }
 
+    const fnEnd = performance.now();
+    console.log('====================  events_searchLocationCategory 2 // end  ====================');
+    console.log(fnEnd - fnStart);
     return res.json(events);
   } else if (location !== 'Any' && category !== 'Any') {
+    console.log('==================== events_searchLocationCategory 3 // start ====================');
+    const fnStart = performance.now();
     const eventList = await Event.findAll({
       where: {
         [Op.and]: [{
@@ -193,8 +207,13 @@ router.get('/search/:location/:category', async (req, res) => {
       });
     }
 
+    const fnEnd = performance.now();
+    console.log('====================  events_searchLocationCategory 3 // end  ====================');
+    console.log(fnEnd - fnStart);
     return res.json(events);
   } else {
+    console.log('==================== events_searchLocationCategory 4 // start ====================');
+    const fnStart = performance.now();
     const eventList = await Event.findAll();
     const events = [];
     const events_mldj = await Event.findAll({
@@ -224,6 +243,9 @@ router.get('/search/:location/:category', async (req, res) => {
       });
     }
 
+    const fnEnd = performance.now();
+    console.log('====================  events_searchLocationCategory 4 // end  ====================');
+    console.log(fnEnd - fnStart);
     return res.json(events);
   }
 });
@@ -284,6 +306,8 @@ router.post('/', async (req, res) => {
   return res.json(newEvent);
 });
 router.get('/users/:userId', async (req, res) => {
+    console.log('==================== events_usersUserId // start ====================');
+    const fnStart = performance.now();
   const events = await Event.findAll({
     where: {
       hostId: req.params.userId
@@ -305,6 +329,9 @@ router.get('/users/:userId', async (req, res) => {
     });
   }
 
+  const fnEnd = performance.now();
+  console.log('====================  events_usersUserId // end  ====================');
+  console.log(fnEnd - fnStart);
   return res.json(eventList);
 });
 router.put('/', async (req, res) => {

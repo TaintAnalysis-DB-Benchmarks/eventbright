@@ -7,8 +7,12 @@ const {
   Like
 } = require('../../db/models');
 
+const { performance } = require('perf_hooks');
+
 const router = express.Router();
 router.get('/:userId', async (req, res) => {
+    console.log('==================== like_userId // start ====================');
+    const fnStart = performance.now();
   const likes = await Like.findAll({
     where: {
       userId: req.params.userId
@@ -25,7 +29,10 @@ router.get('/:userId', async (req, res) => {
     const likedEvent = events_0ize.find(data => data.id === likes[i].eventId);
     likedEvents.push(likedEvent.dataValues);
   }
-
+  
+  const fnEnd = performance.now();
+  console.log('====================  like_userId // end  ====================');
+  console.log(fnEnd - fnStart);
   return res.json(likedEvents);
 });
 router.post('/', async (req, res) => {

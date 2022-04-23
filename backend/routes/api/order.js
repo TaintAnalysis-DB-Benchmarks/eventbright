@@ -10,8 +10,12 @@ const {
   OrderDetail
 } = require('../../db/models');
 
+const { performance } = require('perf_hooks');
+
 const router = express.Router();
 router.get('/:userId', async (req, res) => {
+    console.log('==================== order_userId // start ====================');
+    const fnStart = performance.now();
   const allOrders = await Order.findAll({
     where: {
       userId: req.params.userId
@@ -38,6 +42,9 @@ router.get('/:userId', async (req, res) => {
     });
   }
 
+  const fnEnd = performance.now();
+  console.log('====================  order_userId // end  ====================');
+  console.log(fnEnd - fnStart);
   return res.json(orderList);
 });
 router.post('/', async (req, res) => {
