@@ -4,6 +4,9 @@ const { Op } = require('sequelize');
 
 const router = express.Router();
 
+// Performance Stuff.
+const { performance } = require('perf_hooks');
+
 router.get('/name/:name', async (req, res) => {
     if (req.params.name === 'Any') return res.json([]);
     const searchList = await Event.findAll({ where: { name: { [Op.or]: [{ [Op.substring]: req.params.name }, { [Op.startsWith]: req.params.name[0].toLowerCase() + req.params.name.slice(1) }, { [Op.startsWith]: req.params.name[0].toUpperCase() + req.params.name.slice(1) }, { [Op.iLike]: `%${req.params.name}` } ] } } });
@@ -15,6 +18,8 @@ router.get('/search/:location/:category', async (req, res) => {
     const category = req.params.category;
 
     if (location !== 'Any' && category === 'Any') {
+        console.log('==================== events_searchLocationCategory 1 // start ====================');
+        const fnStart = performance.now();
         const eventList = await Event.findAll({ where: {
             [Op.or]: [ { city: { [Op.or]: [{ [Op.substring]: location }, { [Op.startsWith]: location[0].toLowerCase() + location.slice(1) }, { [Op.startsWith]: location[0].toUpperCase() + location.slice(1) }, { [Op.iLike]: `%${location}` } ] } },
                     { state: { [Op.or]: [{ [Op.substring]: location }, { [Op.startsWith]: location[0].toLowerCase() + location.slice(1) }, { [Op.startsWith]: location[0].toUpperCase() + location.slice(1) }, { [Op.iLike]: `%${location}` } ] } } ]
@@ -27,9 +32,14 @@ router.get('/search/:location/:category', async (req, res) => {
             const tickets = await Ticket.findAll({ where: { eventId: eventList[i].id } })
             events.push({ event: event.dataValues, host: host.dataValues, tickets });
         }
+        const fnEnd = performance.now();
+        console.log('====================  events_searchLocationCategory 1 // end  ====================');
+        console.log(fnEnd - fnStart);
         return res.json(events);
     }
     else if (location === 'Any' && category !== 'Any') {
+        console.log('==================== events_searchLocationCategory 2 // start ====================');
+        const fnStart = performance.now();
         const eventList = await Event.findAll({ where: { category } });
         const events = [];
 
@@ -39,9 +49,14 @@ router.get('/search/:location/:category', async (req, res) => {
             const tickets = await Ticket.findAll({ where: { eventId: eventList[i].id } })
             events.push({ event: event.dataValues, host: host.dataValues, tickets });
         }
+        const fnEnd = performance.now();
+        console.log('====================  events_searchLocationCategory 2 // end  ====================');
+        console.log(fnEnd - fnStart);
         return res.json(events);
     }
     else if (location !== 'Any' && category !== 'Any') {
+        console.log('==================== events_searchLocationCategory 3 // start ====================');
+        const fnStart = performance.now();
         const eventList = await Event.findAll({ where: {
                 [Op.and]: [
                     {[Op.or]: [
@@ -59,9 +74,14 @@ router.get('/search/:location/:category', async (req, res) => {
             const tickets = await Ticket.findAll({ where: { eventId: eventList[i].id } })
             events.push({ event: event.dataValues, host: host.dataValues, tickets });
         }
+        const fnEnd = performance.now();
+        console.log('====================  events_searchLocationCategory 3 // end  ====================');
+        console.log(fnEnd - fnStart);
         return res.json(events);
     }
     else {
+        console.log('==================== events_searchLocationCategory 4 // start ====================');
+        const fnStart = performance.now();
         const eventList = await Event.findAll();
         const events = [];
 
@@ -72,6 +92,9 @@ router.get('/search/:location/:category', async (req, res) => {
             events.push({ event: event.dataValues, host: host.dataValues, tickets });
         }
 
+        const fnEnd = performance.now();
+        console.log('====================  events_searchLocationCategory 4 // end  ====================');
+        console.log(fnEnd - fnStart);
         return res.json(events);
     }
 });
@@ -102,6 +125,8 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/users/:userId', async (req, res) => {
+    console.log('==================== events_usersUserId // start ====================');
+    const fnStart = performance.now();
     const events = await Event.findAll({ where: { hostId: req.params.userId } });
     const eventList = [];
 
@@ -110,6 +135,9 @@ router.get('/users/:userId', async (req, res) => {
         const tickets = await Ticket.findAll({ where: { eventId: events[i].id } });
         eventList.push({ event, tickets });
     }
+    const fnEnd = performance.now();
+    console.log('====================  events_usersUserId // end  ====================');
+    console.log(fnEnd - fnStart);
     return res.json(eventList);
 });
 

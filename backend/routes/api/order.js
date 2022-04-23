@@ -4,6 +4,8 @@ const { User, Event, Ticket, Order, OrderDetail } = require('../../db/models');
 const router = express.Router();
 
 router.get('/:userId', async (req, res) => {
+    console.log('==================== order_userId // start ====================');
+    const fnStart = performance.now();
     const allOrders = await Order.findAll({ where: { userId: req.params.userId } });
     const orderList = [];
 
@@ -17,6 +19,10 @@ router.get('/:userId', async (req, res) => {
 
         orderList.push({ order: allOrders[i].dataValues, orderInfo });
     }
+
+    const fnEnd = performance.now();
+    console.log('====================  order_userId // end  ====================');
+    console.log(fnEnd - fnStart);
     return res.json(orderList);
 });
 
