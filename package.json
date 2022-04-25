@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/twincarlos/eventbright/issues"
   },
-  "homepage": "https://github.com/twincarlos/eventbright#readme"
+  "homepage": "https://github.com/twincarlos/eventbright#readme",
+  "dependencies": {
+    "@faker-js/faker": "^6.2.0"
+  }
 }

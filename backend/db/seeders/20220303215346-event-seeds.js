@@ -1,5 +1,7 @@
 'use strict';
 
+const { faker } = require('@faker-js/faker')
+
 const genThisTime = 10;
 
 module.exports = {
@@ -79,13 +81,13 @@ const buildEvent = () => {
       hostId: faker.datatype.number({min:1, max:10}),
       name: faker.random.words(3),
       about: faker.lorem.lines(),
-      image: faker.arrayElement(eventbrightImages),
+      image: faker.random.arrayElement(eventbrightImages),
       venue: faker.random.words(2),
-      address: faker.address.streedAddress(),
+      address: faker.address.streetAddress(),
       city: faker.address.city(),
       state: faker.address.state(),
       country: faker.address.country(),
-      category: faker.arrayElement(eventbrightCategories),
+      category: faker.random.arrayElement(eventbrightCategories),
       date: '2023-01-01',
       createdAt: new Date(),
       updatedAt: new Date()
