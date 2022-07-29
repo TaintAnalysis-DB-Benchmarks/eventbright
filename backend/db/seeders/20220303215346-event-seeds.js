@@ -4,6 +4,8 @@ const { faker } = require('@faker-js/faker')
 
 const genThisTime = 10;
 
+const mode = "basic";
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*
@@ -12,7 +14,11 @@ module.exports = {
 
       Example:
       */
-    return queryInterface.bulkInsert('Events', generateEvents(genThisTime), {});
+    if (mode === "basic") {
+      return queryInterface.bulkInsert('Events', originalEvents, {});
+    } else {
+      return queryInterface.bulkInsert('Events', generateEvents(genThisTime), {}); 
+    }
   },
 
   down: (queryInterface, Sequelize) => {
